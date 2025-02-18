@@ -92,8 +92,11 @@ function Mouse.new()
 	self.Scrolled = self._trove:Construct(Signal)
 	self.Moved = self._trove:Construct(Signal)
 
+	-- Added the setting for customizability
+	self.IgnoreProcessedInput = false
+
 	self._trove:Connect(UserInputService.InputBegan, function(input, processed)
-		if processed then
+		if processed and not self.IgnoreProcessedInput then
 			return
 		end
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -106,7 +109,7 @@ function Mouse.new()
 	end)
 
 	self._trove:Connect(UserInputService.InputEnded, function(input, processed)
-		if processed then
+		if processed and not self.IgnoreProcessedInput then
 			return
 		end
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -119,7 +122,7 @@ function Mouse.new()
 	end)
 
 	self._trove:Connect(UserInputService.InputChanged, function(input, processed)
-		if processed then
+		if processed and not self.IgnoreProcessedInput then
 			return
 		end
 		if input.UserInputType == Enum.UserInputType.MouseMovement then
